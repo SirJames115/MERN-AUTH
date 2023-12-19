@@ -18,7 +18,7 @@ const Hero = () => {
                 Sign In
               </Button>
             </LinkContainer>
-            <LinkContainer to="/regisger">
+            <LinkContainer to="/register">
               <Button className="mx-3" variant="secondary">
                 Sign Up
               </Button>
