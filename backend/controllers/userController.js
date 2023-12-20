@@ -9,9 +9,11 @@ const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   // try to see what is in user by logging it to the console
   // I will remove it when am done with it
-  console.log(user)
+  // console.log(user)
 
   const user = await User.findOne({ email });
+
+  // console.log(user)
 
   if (user && (await user.matchPassword(password))) {
     generateToken(res, user._id);
@@ -19,6 +21,7 @@ const authUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      Message: 'User Logged in successfully',
     });
   } else {
     res.status(401);
@@ -36,16 +39,21 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const userExists = await User.findOne({ email });
 
+// Check
+  console.log("Exists: ", userExists)
+
   if (userExists) {
     res.status(400);
     throw new Error("User already exists");
   }
 
   const user = await User.create({
-    name,
-    email,
-    password,
+     name,
+    email: email.toLowerCase(),
+     password,
   });
+// Check
+  // console.log({userIs: user})
 
   if (user) {
     generateToken(res, user._id);
